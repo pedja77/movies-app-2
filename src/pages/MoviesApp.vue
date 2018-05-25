@@ -19,6 +19,7 @@
 <script>
 import { MovieService } from "../services/MovieService"
 import MovieRow from "../components/MovieRow"
+import { mapActions } from "vuex"
 
 export default {
   name: "movies-app",
@@ -38,6 +39,9 @@ export default {
       movies: []
     }
   },
+  methods: {
+    ...mapActions(["fetchMovies"])
+  },
   // created() {
   //   MovieService.getAllMovies().then(({ data }) => {
   //     this.movies = data
@@ -49,6 +53,7 @@ export default {
         context.movies = data
       })
     })
+    // store.fetchMovies(next)
   }
 }
 </script>

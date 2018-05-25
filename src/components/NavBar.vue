@@ -8,18 +8,39 @@
       <!-- <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> -->
       <div class="navbar-nav">
         <router-link class="nav-item nav-link" to="/movies">Movies</router-link>
+        <router-link v-if="!isAuthenticated" class="nav-item nav-link" to="/login">Login</router-link>
+        <a v-else class="nav-item nav-link" href="#" @click="logout">Logout</a>
 
       </div>
+      <movie-search />
       <!-- </div> -->
     </nav>
   </div>
 </template>
 
 <script>
+import MovieSearch from "./MovieSearch"
+import { authService } from "../services/Auth.js"
+import { mapGetters } from "vuex"
+
 export default {
-  name: "nav-bar"
+  name: "nav-bar",
+  components: {
+    MovieSearch
+  },
+  computed: {
+    ...mapGetters({
+      isAuthenticated: "getIsAuthenticated"
+    })
+  },
+  methods: {
+    logout() {
+      console.log("out", this.isAuthenticated)
+      authService.logout()
+      console.log("out2", this.isAuthenticated)
+    }
+  }
 }
 </script>
 
-<style>
-</style>
+
