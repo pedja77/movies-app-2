@@ -16,6 +16,10 @@ class MovieService {
       }
     })
   }
+
+  addMovie(movie) {
+    return this.client.post("/movies", movie)
+  }
 }
 
 const movieService = new MovieService()

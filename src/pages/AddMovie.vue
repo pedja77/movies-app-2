@@ -1,26 +1,84 @@
 <template>
   <div class="container">
-    <form>
+    <h3>Add new movie</h3>
+    <form @submit.prevent="addMovie">
       <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <label for="title">Movie title</label>
+        <input type="text" class="form-control" id="title" placeholder="Enter title" v-model="movie.title">
+        <div class="alert alert-danger" role="alert" v-if="errors.title">
+          {{ errors.title[0] }}
+        </div>
       </div>
       <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <label for="director">Director</label>
+        <input type="text" class="form-control" id="director" placeholder="Enter directors name" v-model="movie.director">
+        <div class="alert alert-danger" role="alert" v-if="errors.director">
+          {{ errors.director[0] }}
+        </div>
       </div>
-      <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      <div class="form-group">
+        <label for="imageUrl">Cover image url</label>
+        <input type="text" class="form-control" id="imageUrl" placeholder="Enter cover image url" v-model="movie.imageUrl">
+        <div class="alert alert-danger" role="alert" v-if="errors.imageUrl">
+          {{ errors.imageUrl[0] }}
+        </div>
       </div>
+      <div class="form-group">
+        <label for="duration">Duration</label>
+        <input type="text" class="form-control" id="duration" placeholder="Enter duration" v-model="movie.duration">
+        <div class="alert alert-danger" role="alert" v-if="errors.duration">
+          {{ errors.duration[0] }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="releaseDate">Release date</label>
+        <input type="text" class="form-control" id="releaseDate" placeholder="Enter release date" v-model="movie.releaseDate">
+        <div class="alert alert-danger" role="alert" v-if="errors.releaseDate">
+          {{ errors.releaseDate[0] }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="genre">Genre</label>
+        <input type="text" class="form-control" id="genre" placeholder="Enter genre" v-model="movie.genre">
+      </div>
+
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
 </template>
 
 <script>
-export default {}
+import { MovieService } from "../services/MovieService.js"
+
+export default {
+  data() {
+    return {
+      movie: {
+        title: "",
+        director: "",
+        imageUrl: "",
+        duration: "",
+        releaseDate: "",
+        genre: ""
+      },
+      errors: {}
+    }
+  },
+  methods: {
+    addMovie(movie) {
+      console.log("service ", MovieService)
+      MovieService.addMovie(this.movie)
+        .then(() => {
+          this.errors = {}
+          this.$router.push("/movies")
+        })
+        .catch(err => {
+          //console.log("err ", err.response.data)
+          this.errors = err.response.data
+        })
+    }
+  }
+}
 </script>
 
 <style>
