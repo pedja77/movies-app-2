@@ -1,5 +1,5 @@
 import axios from "axios"
-import { authStore } from "../store/authStore.js"
+//import { authStore } from "../store/authStore.js"
 
 axios.defaults.baseURL = "http://localhost:8000/api"
 
@@ -11,7 +11,7 @@ export default class AuthService {
         password
       })
       .then(response => {
-        console.log("login", response.data)
+        console.log("login", response.data) // eslint-disable-line
         window.localStorage.setItem("loginToken", response.data.token)
         this.setAxiosDefaultAuthorizationHeader()
         //authStore.setIsAuthenticated(true)
@@ -26,12 +26,11 @@ export default class AuthService {
   logout() {
     window.localStorage.removeItem("loginToken")
     delete axios.defaults.headers.common["Authorization"]
-    authStore.setIsAuthenticated(false)
   }
 
-  // isAuthenticated() {
-  //   return !!window.localStorage.getItem("loginToken")
-  // }
+  isAuthenticated() {
+    return !!window.localStorage.getItem("loginToken")
+  }
 }
 
 export const authService = new AuthService()

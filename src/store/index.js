@@ -27,7 +27,7 @@ export const store = new Vuex.Store({
   },
   actions: {
     fetchMovies(store, next) {
-      console.log("fetchMovies")
+      console.log("fetchMovies") // eslint-disable-line
       // MovieService.getAllMovies().then(response => {
       //   let movies = response.data.map(movie => {
       //     movie.duration = Number(movie.duration)

@@ -17,5 +17,10 @@ export const authStore = new Vuex.Store({
     setIsAuthenticated(state, value) {
       state.isAuthenticated = value
     }
+  },
+  actions: {
+    authenticate(store) {
+      console.log("authStoreAction") // eslint-disable-line
+    }
   }
 })
