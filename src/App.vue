@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <nav-bar :is-logged="isLogged" />
-    <router-view @user-logged-in="logged" />
+    <nav-bar />
+    <router-view />
   </div>
 </template>
 
@@ -13,15 +13,6 @@ export default {
   name: "app",
   components: {
     NavBar
-  },
-  data() {
-    isLogged: false
-  },
-  methods: {
-    logged() {
-      this.isLogged = true
-      console.log("Logged: ", this.isLogged)
-    }
   }
 }
 </script>

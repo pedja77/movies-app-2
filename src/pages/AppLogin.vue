@@ -14,6 +14,7 @@
 
 <script>
 import { authService } from "../services/Auth"
+//import { globalEventBus } from "../services/GlobalEventBus.js"
 export default {
   data() {
     return {
@@ -28,15 +29,15 @@ export default {
         .login(this.email, this.password)
         .then(() => {
           this.errMessage = ""
-          console.log("before push")
+          //console.log("before push")
           this.$router.push({ name: "movies" })
-          this.$emit("user-logged-in")
-          console.log("after push")
+          this.$eventHub.$emit("user-loged-in", authService.isAuthenticated())
+          //console.log("after push")
         })
         .catch(err => {
           let error = err.response.data.error.split("_").join(" ")
           this.errMessage = error
-          console.log("EE", err.response.data.error)
+          //console.log("EE", err.response.data.error)
         })
     }
   }
