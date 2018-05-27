@@ -8,6 +8,7 @@
       <!-- <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> -->
       <div class="navbar-nav">
         <router-link class="nav-item nav-link" to="/movies">Movies</router-link>
+        <router-link class="nav-item nav-link" to="/add">Add Movie</router-link>
         <router-link v-if="!isAuthenticated" class="nav-item nav-link" to="/login">Login</router-link>
         <a v-else class="nav-item nav-link" href="#" @click="logout">Logout</a>
 

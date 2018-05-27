@@ -57,9 +57,7 @@ export default {
     // MovieService.getAllMovies().then(({ data }) => {
     //   this.movies = data
     // })
-    this.$eventHub.$on("search-term-updated", searchTerm => {
-      this.searchMovies(searchTerm)
-    })
+    this.$eventHub.$on("search-term-updated", this.searchMovies)
   },
   beforeRouteEnter(to, from, next) {
     MovieService.getAllMovies().then(({ data }) => {
