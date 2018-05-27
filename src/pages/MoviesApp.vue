@@ -1,15 +1,15 @@
 <template>
   <div class="container mt-4">
-    <div class="row">
-      <div class="col-8">
+    <div class="alert alert-danger" role="alert" v-if="noMoviesFound">
+      <p>No movies match search criteria</p>
+    </div>
+    <div class="row" v-else>
+      <div class="col">
         <div class="d-flex flex-row flex-wrap justify-content-start">
           <div v-for="movie in movies" :key="movie.id" class="align-self-stretch">
             <movie-row :movie="movie" />
           </div>
         </div>
-      </div>
-      <div class="col-4">
-
       </div>
     </div>
 
@@ -36,7 +36,8 @@ export default {
         imageUrl: "",
         genre: ""
       },
-      movies: []
+      movies: [],
+      noMoviesFound: false
     }
   },
   methods: {
@@ -44,6 +45,11 @@ export default {
     searchMovies(searchTerm) {
       MovieService.getAllMovies(searchTerm).then(({ data }) => {
         this.movies = data
+        if (!this.movies.length) {
+          this.noMoviesFound = true
+        } else {
+          this.noMoviesFound = false
+        }
       })
     }
   },
