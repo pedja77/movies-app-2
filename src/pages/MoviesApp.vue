@@ -2,11 +2,16 @@
   <div class="container mt-4">
     <div class="row">
       <div class="col-4">
-        Currently selected movies: {{ numberOfSelectedMovies }}
-      </div>
-      <div class="col-8">
+        Currently selected movies: {{ numberOfSelectedMovies }}<br />
         <button class="btn btn-primary" @click="selectAllMovies">Select All</button>
         <button class="btn btn-primary" @click="deselectAllMovies">Deselect All</button>
+      </div>
+      <div class="col-8">
+        Sort search results:
+        <button class="btn btn-primary" @click="fetchSortedMovies({column: 'title', direction: 'asc'})">By title asc</button>
+        <button class="btn btn-primary" @click="fetchSortedMovies({column: 'title', direction: 'desc'})">By title desc</button>
+        <button class="btn btn-primary" @click="fetchSortedMovies({column: 'duration', direction: 'asc'})">By duration asc</button>
+        <button class="btn btn-primary" @click="fetchSortedMovies({column: 'duration', direction: 'desc'})">By duration desc</button>
       </div>
     </div>
     <div class="alert alert-danger" role="alert" v-if="noMoviesFound">
@@ -45,6 +50,13 @@ export default {
         imageUrl: "",
         genre: ""
       },
+      requestParams: {
+        term: "",
+        skip: null,
+        take: null,
+        column: null,
+        direction: null
+      },
       movies: [],
       noMoviesFound: false,
       selectedMoviesIds: []
@@ -58,7 +70,7 @@ export default {
   methods: {
     ...mapActions(["fetchMovies"]),
     searchMovies(searchTerm) {
-      MovieService.getAllMovies(searchTerm).then(({ data }) => {
+      MovieService.getAllMovies({ term: searchTerm }).then(({ data }) => {
         this.movies = data
         if (!this.movies.length) {
           this.noMoviesFound = true
@@ -80,6 +92,13 @@ export default {
     },
     deselectAllMovies() {
       this.selectedMoviesIds = []
+    },
+    fetchSortedMovies(params) {
+      console.log("fetchSorted ", "entered")
+      MovieService.getAllMovies(params).then(({ data }) => {
+        console.log("fetchSorted ", this.movies === data)
+        this.movies = data
+      })
     }
   },
   created() {

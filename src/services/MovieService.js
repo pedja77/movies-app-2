@@ -7,14 +7,8 @@ class MovieService {
     })
   }
 
-  getAllMovies(term = "", take = null, skip = null) {
-    return this.client.get("/movies", {
-      params: {
-        term,
-        take,
-        skip
-      }
-    })
+  getAllMovies(params) {
+    return this.client.get("/movies", { params })
   }
 
   addMovie(movie) {
