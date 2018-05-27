@@ -1,5 +1,14 @@
 <template>
   <div class="container mt-4">
+    <div class="row">
+      <div class="col-4">
+        Currently selected movies: {{ numberOfSelectedMovies }}
+      </div>
+      <div class="col-8">
+        <button class="btn btn-primary" @click="selectAllMovies">Select All</button>
+        <button class="btn btn-primary" @click="deselectAllMovies">Deselect All</button>
+      </div>
+    </div>
     <div class="alert alert-danger" role="alert" v-if="noMoviesFound">
       <p>No movies match search criteria</p>
     </div>
@@ -7,7 +16,7 @@
       <div class="col">
         <div class="d-flex flex-row flex-wrap justify-content-start">
           <div v-for="movie in movies" :key="movie.id" class="align-self-stretch">
-            <movie-row :movie="movie" />
+            <movie-row :movie="movie" @movie-selected="selectMovie" :selected-movies-ids="selectedMoviesIds" />
           </div>
         </div>
       </div>
@@ -37,7 +46,13 @@ export default {
         genre: ""
       },
       movies: [],
-      noMoviesFound: false
+      noMoviesFound: false,
+      selectedMoviesIds: []
+    }
+  },
+  computed: {
+    numberOfSelectedMovies() {
+      return this.selectedMoviesIds.length
     }
   },
   methods: {
@@ -51,6 +66,20 @@ export default {
           this.noMoviesFound = false
         }
       })
+    },
+    selectMovie(id) {
+      let idIndex = this.selectedMoviesIds.indexOf(id)
+      if (idIndex > -1) {
+        this.selectedMoviesIds.splice(idIndex, 1)
+      } else {
+        this.selectedMoviesIds.push(id)
+      }
+    },
+    selectAllMovies() {
+      this.selectedMoviesIds = this.movies.map(movie => movie.id)
+    },
+    deselectAllMovies() {
+      this.selectedMoviesIds = []
     }
   },
   created() {
