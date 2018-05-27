@@ -40,13 +40,21 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchMovies"])
+    ...mapActions(["fetchMovies"]),
+    searchMovies(searchTerm) {
+      MovieService.getAllMovies(searchTerm).then(({ data }) => {
+        this.movies = data
+      })
+    }
   },
-  // created() {
-  //   MovieService.getAllMovies().then(({ data }) => {
-  //     this.movies = data
-  //   })
-  // },
+  created() {
+    // MovieService.getAllMovies().then(({ data }) => {
+    //   this.movies = data
+    // })
+    this.$eventHub.$on("search-term-updated", searchTerm => {
+      this.searchMovies(searchTerm)
+    })
+  },
   beforeRouteEnter(to, from, next) {
     MovieService.getAllMovies().then(({ data }) => {
       next(context => {

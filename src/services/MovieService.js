@@ -1,15 +1,20 @@
-import Axios from 'axios'
+import Axios from "axios"
 
 class MovieService {
-
   constructor() {
     this.client = new Axios.create({
-      baseURL: 'http://localhost:8000/api/'
+      baseURL: "http://localhost:8000/api/"
     })
   }
 
-  getAllMovies() {
-    return this.client.get('/movies')
+  getAllMovies(term = "", take = null, skip = null) {
+    return this.client.get("/movies", {
+      params: {
+        term,
+        take,
+        skip
+      }
+    })
   }
 }
 
