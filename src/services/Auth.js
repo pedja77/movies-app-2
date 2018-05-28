@@ -31,6 +31,10 @@ export default class AuthService {
   isAuthenticated() {
     return !!window.localStorage.getItem("loginToken")
   }
+
+  register(newUser) {
+    return axios.post("/register", newUser)
+  }
 }
 
 export const authService = new AuthService()

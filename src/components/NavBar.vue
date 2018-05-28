@@ -11,7 +11,7 @@
         <router-link class="nav-item nav-link" to="/add">Add Movie</router-link>
         <router-link v-if="!isAuthenticated" class="nav-item nav-link" to="/login">Login</router-link>
         <a v-else class="nav-item nav-link" href="#" @click="logout">Logout</a>
-
+        <router-link v-if="!isAuthenticated" class="nav-item nav-link" to="/register">Register</router-link>
       </div>
       <movie-search />
       <!-- </div> -->
