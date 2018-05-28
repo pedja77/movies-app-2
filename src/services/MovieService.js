@@ -14,6 +14,10 @@ class MovieService {
   addMovie(movie) {
     return this.client.post("/movies", movie)
   }
+
+  getMovie(id) {
+    return this.client.get(`/movies/${id}`)
+  }
 }
 
 const movieService = new MovieService()
